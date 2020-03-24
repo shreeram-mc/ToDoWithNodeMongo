@@ -1,0 +1,52 @@
+﻿@html.extend('layout', function(model) {
+
+@html.block("scripts", function(model){
+    <script src="/js/notesView.js"></script>
+}); 
+
+@html.block("body", function (model) {
+ 
+<div ng-app="notesView">
+    
+    <div ng-controller="notesViewController">
+        <div class="note" ng-repeat="n in notes" ng-class="'note-' + n.color">
+            <div>{{n.note}}</div>
+            <div class="note-author"><small>{{n.author}}</small><a href="javascript:void(0)"><i class="glyphicon glyphicon-trash" ng-click="deleteNote($index)"></i></a> </div>
+        </div>
+
+        <form role="form" class="form-horizontal" name="newNoteForm" ng-submit="save()">
+            <div class="form-group">
+                <label class="control-label col-lg-1">Color</label>
+                <div class="col-lg-5">
+                    <div class="btn-group"> 
+                        <input type="radio" ng-model="newNote.color" value="yellow" > Yellow <br/>
+                        <input type="radio" ng-model="newNote.color" value="green"> Green <br/>
+                        <input type="radio" ng-model="newNote.color" value="blue"> Blue <br/>
+                        <input type="radio" ng-model="newNote.color" value="orange"> Orange <br/>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-1">Content</label>
+                <div class="col-lg-5">
+                    <textarea cols="30" rows="2" name="note" placeholder="Your Note" ng-model="newNote.note" class="form-control" required maxlength="120"></textarea>
+                    <span ng-show="newNoteForm.note.$error.required">Required</span>
+                    <p>{{120 - newNote.note.length}} Remaining</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-offset-1 col-lg-5">
+                    <a href="/" class="btn btn-default">Back</a> &nbsp;
+                    <input type="submit" value="Save" class="btn btn-primary" ng-disabled="newNoteForm.$invalid">
+                     
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+})
+})
